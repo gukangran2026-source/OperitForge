@@ -1,4 +1,4 @@
-# Claude Code 主题 · v1.7.0
+# Claude Code 主题 · v2.0.0
 
 面向 Operit 1.12.2 的非官方主题插件。提供「终端暖黑」和「纸感米白」两套配色，保留陶土橙强调色、等宽聊天字体、宽消息布局和简洁头像设置。
 
@@ -8,6 +8,7 @@
 2. 打开工具箱或侧栏的「Claude Code 主题」。
 3. 选择「暖黑」或「米白」预览，再点击「应用到当前角色」。
 4. 想恢复时，进入同一角色，点击「恢复之前的外观」。
+5. 想一次铺到所有角色卡和角色群组，点击「应用到全部角色」。
 
 页面顶部有两个开关，改动立即保存；当前角色已应用主题时会马上重新应用一次：
 
@@ -95,3 +96,51 @@ Claude Code 终端背景由终端控制，这里的米白 / 暖黑是风格化�
 真机验证（Operit 1.12.2，米白角色）：`commitThemeDraft` 写入 `chat_input_transparent=true` 后读回为 true；手动把 `theme_mode` 改成 `dark` 制造不一致，切到别的应用再回到 Operit，`autoFollow` 自动把主题改回 `light`，`opt:last_variant=light`、`auto:last_switch=light`，原外观备份未被覆盖。本机没有 `WRITE_SECURE_SETTINGS`/Root，无法直接切换系统深夜模式，因此「系统深色 → 暖黑」方向未在真机实测，只验证了同一路径的反向切换。
 
 自动切换依赖宿主在深浅色变化时重建 Activity 或重新回到前台；如果宿主在同一次前台停留内切换深浅色且不重建 Activity，需要重新进入前台或重启 Operit 才会生效。
+
+## 1.9.0 空状态资源自举与全部角色
+
+1.8.0 的空状态图只认外部固定目录 `resources/empty3/`，而 manifest 只登记了 5 个资源键，图片一张都没被提取。结果就是：跑过构建的机器有图，任何干净设备装上都是普通背景，钩子日志里反复出现「空状态背景资源不存在」。
+
+1.9.0 的处理：
+
+- manifest 把 70 张空状态图全部登记为独立资源键（`art_*`），随包分发，不依赖构建副作用。
+- 新增 `ensureArtAssets()`：在主题页加载、点「刷新状态」、点「应用」这些有 runtime target 的时机，把缺失的图逐张经 `ToolPkg.readResource(..., true)` 展开一次，把绝对路径存进 `claude_code_theme_v1` 的 `art:<文件名>`。
+- 钩子侧改为先读这个记录的路径，再回退旧的 `resources/empty3/` 镜像。两条都没有才报错，且错误文案直接说明怎么修。
+- 主题页状态行显示「星芒图 70/70 就绪」，缺图时能直接看出来。
+
+新增「应用到全部角色」：
+
+- 遍历 `CharacterCardManager.getAllCharacterCards()` 与 `CharacterGroupCardManager.getAllCharacterGroupCards()`，对每个 `ActivePrompt` 调用同一个 `commitThemeDraft`，不需要切换当前角色。
+- 每个角色单独记录 `applied:<key>` 与 `backup:<key>`，恢复一个角色不会影响其他角色。
+- 当前可见角色走原有的双次提交（font_scale 微调），其余角色只提交一次，减少重绘开销。
+- 单个角色失败不中断，结果里列出失败项与原因。
+
+已知边界：全部角色应用是串行提交，角色很多时需要几秒；它只处理角色卡与角色群组，不改变聊天记录、模型配置和头像。
+
+## 2.0.0 应用到全部角色 / 恢复所有角色
+
+1.9.x 里这两个按钮在真机上一直失败，实测定位到三层原因：
+
+- ToolPkg 桥接按参数的运行时类型匹配方法。`getAllCharacterCards()` 返回的是 `CharacterCard` 实体，而 `commitThemeDraft` 声明参数是 `ActivePrompt` 接口，两者对不上，直接报 `no suspend method matched`
+- 多个 manager 方法在桥接里根本不可见：`getCharacterCardThemePrefix`、`cloneThemeBetweenPrefixes` 都返回 `not found`，所以克隆路线也走不通
+- 中途我在 `dist` 里写了未定义变量 `VERSION`（CommonJS 里应为 `exports.VERSION`），把上面两条掩盖了两轮
+
+2.0.0 的做法：随插件打包一个自编译 DEX（`resources/bulk-theme.dex`，源码在仓库 `java/bulk-theme/`），在应用进程内用真实反射绕过桥接的类型匹配：
+
+- `ActivePrompt` 是 sealed interface，两个实现类 `ActivePrompt$CharacterCard` / `ActivePrompt$CharacterGroup` 的构造函数都只接受一个 String id
+- 用它按 id 构造 prompt 对象，再调用 `commitThemeDraft(prompt, values)` 的同步包装（自建 Continuation + CountDownLatch）
+- 不需要切换当前角色，也不依赖桥接暴露那些方法
+- 每个角色单独写 `backup:` / `applied:` 记录，恢复互不影响
+
+实测（Operit 1.12.2，5 张角色卡）：
+
+```
+[apply-all] done applied=5 failed=0
+[restore-all] done restored=5 missing=0 failed=0
+```
+
+排错日志固定写到 `/sdcard/Download/Operit/dev_package/theme-all.log`。
+
+### 已知问题
+
+深色模式下聊天列表里的角色名是 `#000000`，背景 `#1C1B19`，几乎看不清。原因是预编译色表 DEX 覆盖了 `onSurfaceVariant` 等字段，但没有覆盖 `onSurface`，而列表项文字正好取它。修复需要改色表 DEX，尚未处理。

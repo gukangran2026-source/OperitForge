@@ -1,17 +1,19 @@
 {
   "schema_version": 1,
   "toolpkg_id": "local.operit.claude_code_theme",
-  "version": "1.8.0",
+  "version": "2.0.0",
   "api_version": "1.0.1",
   "main": "dist/main.js",
-  "author": ["liuenmin"],
+  "author": [
+    "liuenmin"
+  ],
   "display_name": {
     "zh": "Claude Code 主题",
     "en": "Claude Code Theme"
   },
   "description": {
-    "zh": "Claude Code 风格米白/暖黑主题。跟随系统深浅色自动切换、透明输入框。新对话空状态显示 Claude 星芒与问候语，星芒和标语各有独立开关，发出第一条消息后自动淡出。问候语按星期与时段确定，并依据本地使用习惯（深夜居多时显示夜猫子），习惯数据仅保存在本机、上限 1MB、按最久未见淘汰，不调用任何模型。适配 Operit 1.12.2。",
-    "en": "Claude Code inspired theme for Operit 1.12.2: paper light and warm dark palettes, system dark-mode following, transparent chat input. Empty chats show the Claude starburst and a greeting chosen by weekday and time of day, with separate switches for the icon and the slogan; both fade out after the first message. Habits are counted locally only (1 MB cap, least-recently-seen eviction) and never sent to a model."
+    "zh": "Claude Code 风格米白/暖黑主题。跟随系统深浅色自动切换、透明输入框。新对话空状态显示 Claude 星芒与问候语，星芒和标语各有独立开关，发出第一条消息后自动淡出。问候语按星期与时段确定，并依据本地使用习惯（深夜居多时显示夜猫子），习惯数据仅保存在本机、上限 1MB、按最久未见淘汰，不调用任何模型。首次打开主题页或点应用时会把空状态图片展开到本机固定位置，导入即可用。支持一键应用到全部角色卡与角色群组，每个角色单独保留原外观备份。适配 Operit 1.12.2。",
+    "en": "Claude Code inspired theme for Operit 1.12.2: paper light and warm dark palettes, system dark-mode following, transparent chat input. Empty chats show the Claude starburst and a greeting chosen by weekday and time of day, with separate switches for the icon and slogan. The empty-chat art is expanded on first use so a fresh import works without any manual copy. One tap applies the palette to every character card and group, each keeping its own backup."
   },
   "enabled_by_default": true,
   "logo": "logo",
@@ -39,6 +41,361 @@
     {
       "key": "global_palette_dex",
       "path": "resources/global-palette.dex",
+      "mime": "application/octet-stream"
+    },
+    {
+      "key": "art_mark_light",
+      "path": "resources/empty3/mark-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_mark_dark",
+      "path": "resources/empty3/mark-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_afternoon_light",
+      "path": "resources/empty3/afternoon-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_afternoon_light",
+      "path": "resources/empty3/text-afternoon-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_afternoon_dark",
+      "path": "resources/empty3/afternoon-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_afternoon_dark",
+      "path": "resources/empty3/text-afternoon-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_back_at_it_light",
+      "path": "resources/empty3/back-at-it-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_back_at_it_light",
+      "path": "resources/empty3/text-back-at-it-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_back_at_it_dark",
+      "path": "resources/empty3/back-at-it-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_back_at_it_dark",
+      "path": "resources/empty3/text-back-at-it-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_evening_light",
+      "path": "resources/empty3/evening-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_evening_light",
+      "path": "resources/empty3/text-evening-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_evening_dark",
+      "path": "resources/empty3/evening-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_evening_dark",
+      "path": "resources/empty3/text-evening-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_fri_light",
+      "path": "resources/empty3/fri-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_fri_light",
+      "path": "resources/empty3/text-fri-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_fri_dark",
+      "path": "resources/empty3/fri-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_fri_dark",
+      "path": "resources/empty3/text-fri-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_how_can_i_help_light",
+      "path": "resources/empty3/how-can-i-help-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_how_can_i_help_light",
+      "path": "resources/empty3/text-how-can-i-help-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_how_can_i_help_dark",
+      "path": "resources/empty3/how-can-i-help-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_how_can_i_help_dark",
+      "path": "resources/empty3/text-how-can-i-help-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_iam_claude_light",
+      "path": "resources/empty3/iam-claude-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_iam_claude_light",
+      "path": "resources/empty3/text-iam-claude-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_iam_claude_dark",
+      "path": "resources/empty3/iam-claude-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_iam_claude_dark",
+      "path": "resources/empty3/text-iam-claude-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_latenight_light",
+      "path": "resources/empty3/latenight-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_latenight_light",
+      "path": "resources/empty3/text-latenight-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_latenight_dark",
+      "path": "resources/empty3/latenight-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_latenight_dark",
+      "path": "resources/empty3/text-latenight-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_mon_light",
+      "path": "resources/empty3/mon-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_mon_light",
+      "path": "resources/empty3/text-mon-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_mon_dark",
+      "path": "resources/empty3/mon-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_mon_dark",
+      "path": "resources/empty3/text-mon-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_morning_light",
+      "path": "resources/empty3/morning-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_morning_light",
+      "path": "resources/empty3/text-morning-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_morning_dark",
+      "path": "resources/empty3/morning-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_morning_dark",
+      "path": "resources/empty3/text-morning-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_night_owl_light",
+      "path": "resources/empty3/night-owl-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_night_owl_light",
+      "path": "resources/empty3/text-night-owl-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_night_owl_dark",
+      "path": "resources/empty3/night-owl-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_night_owl_dark",
+      "path": "resources/empty3/text-night-owl-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_sat_light",
+      "path": "resources/empty3/sat-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_sat_light",
+      "path": "resources/empty3/text-sat-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_sat_dark",
+      "path": "resources/empty3/sat-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_sat_dark",
+      "path": "resources/empty3/text-sat-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_sun_light",
+      "path": "resources/empty3/sun-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_sun_light",
+      "path": "resources/empty3/text-sun-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_sun_dark",
+      "path": "resources/empty3/sun-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_sun_dark",
+      "path": "resources/empty3/text-sun-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_thu_light",
+      "path": "resources/empty3/thu-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_thu_light",
+      "path": "resources/empty3/text-thu-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_thu_dark",
+      "path": "resources/empty3/thu-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_thu_dark",
+      "path": "resources/empty3/text-thu-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_tue_light",
+      "path": "resources/empty3/tue-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_tue_light",
+      "path": "resources/empty3/text-tue-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_tue_dark",
+      "path": "resources/empty3/tue-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_tue_dark",
+      "path": "resources/empty3/text-tue-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_wed_light",
+      "path": "resources/empty3/wed-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_wed_light",
+      "path": "resources/empty3/text-wed-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_wed_dark",
+      "path": "resources/empty3/wed-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_wed_dark",
+      "path": "resources/empty3/text-wed-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_welcome_back_light",
+      "path": "resources/empty3/welcome-back-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_welcome_back_light",
+      "path": "resources/empty3/text-welcome-back-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_welcome_back_dark",
+      "path": "resources/empty3/welcome-back-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_welcome_back_dark",
+      "path": "resources/empty3/text-welcome-back-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_welcome_claude_light",
+      "path": "resources/empty3/welcome-claude-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_welcome_claude_light",
+      "path": "resources/empty3/text-welcome-claude-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_welcome_claude_dark",
+      "path": "resources/empty3/welcome-claude-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "art_text_welcome_claude_dark",
+      "path": "resources/empty3/text-welcome-claude-dark.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "bulk_theme_dex",
+      "path": "resources/bulk-theme.dex",
       "mime": "application/octet-stream"
     }
   ],

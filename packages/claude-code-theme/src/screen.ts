@@ -1,5 +1,5 @@
 import type { ComposeDslContext } from '../../types/compose-dsl';
-import { VERSION, PACKAGE_ID, PALETTES, SEMANTIC_COLORS, ThemeVariant, applyTheme, restoreTheme, status, updateOptions } from './theme';
+import { VERSION, PACKAGE_ID, PALETTES, SEMANTIC_COLORS, ThemeVariant, applyTheme, applyThemeToAll, restoreTheme, restoreAllTheme, status, updateOptions } from './theme';
 export default function ThemeScreen(ctx: ComposeDslContext) {
   const { UI } = ctx;
   const [message, setMessage] = ctx.useState('message', '选择配色预览，然后应用到当前角色。');
@@ -34,6 +34,14 @@ export default function ThemeScreen(ctx: ComposeDslContext) {
         const result = auto ? await applyTheme(null) : await applyTheme(null, selected);
         setMessage(result.message);
         await ctx.showToast(result.message);
+      } else if (kind === 'applyAll') {
+        const result = auto ? await applyThemeToAll() : await applyThemeToAll(selected);
+        setMessage(result.message);
+        await ctx.showToast(result.message);
+      } else if (kind === 'restoreAll') {
+        const result = await restoreAllTheme();
+        setMessage(result.message);
+        await ctx.showToast(result.message);
       } else if (kind === 'restore') {
         const result = await restoreTheme();
         setMessage(result.message);
@@ -41,7 +49,8 @@ export default function ThemeScreen(ctx: ComposeDslContext) {
       }
       const s = await syncState();
       if (kind === 'status') {
-        setMessage(s.target + ' · ' + (s.applied ? (s.variant === 'light' ? '米白已应用' : '暖黑已应用') : '未应用') + ' · 系统当前' + (s.systemDark ? '深色' : '浅色') + ' · ' + (s.hasBackup ? '原外观可恢复' : '应用时自动备份'));
+        const assetText = ' · 星芒图 ' + s.assets.ready + '/' + s.assets.total + ' 就绪';
+        setMessage(s.target + ' · ' + (s.applied ? (s.variant === 'light' ? '米白已应用' : '暖黑已应用') : '未应用') + ' · 系统当前' + (s.systemDark ? '深色' : '浅色') + ' · ' + (s.hasBackup ? '原外观可恢复' : '应用时自动备份') + assetText);
       }
     } catch (error) {
       const text = error instanceof Error ? error.message : String(error);
@@ -98,7 +107,9 @@ export default function ThemeScreen(ctx: ComposeDslContext) {
       ] }),
       text(message, P.muted, 12),
       UI.Button({ text: busy ? '处理中…' : '应用' + (effective === 'light' ? '米白' : '暖黑') + '到当前角色' + (auto ? '（自动）' : ''), enabled: !busy, onClick: () => action('apply'), containerColor: P.accent, fillMaxWidth: true }),
+      UI.Button({ text: busy ? '处理中…' : '应用到全部角色', enabled: !busy, onClick: () => action('applyAll'), fillMaxWidth: true }),
       UI.Button({ text: '恢复当前角色原外观', enabled: !busy && hasBackup, onClick: () => action('restore'), fillMaxWidth: true }),
+      UI.Button({ text: busy ? '处理中…' : '恢复所有角色原外观', enabled: !busy, onClick: () => action('restoreAll'), fillMaxWidth: true }),
       UI.Button({ text: '刷新状态', enabled: !busy, onClick: () => action('status') }),
       UI.Button({ text: '工具日志预览', onClick: () => ctx.navigate('toolpkg:' + PACKAGE_ID + ':ui:log_preview') }),
       text('两个开关立即保存；角色已应用主题时切换开关会马上重新应用。系统深浅色变化后，下次进入界面或重启 Operit 时自动跟随。', P.muted, 11),

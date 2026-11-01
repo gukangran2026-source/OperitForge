@@ -4,7 +4,7 @@ export { onToolLogRender } from './log-plugin';
 import ThemeScreen from './screen';
 import { PACKAGE_ID, onGlobalPaletteLifecycle } from './theme';
 export { onGlobalPaletteLifecycle } from './theme';
-export { applyTheme, restoreTheme, status, updateOptions, systemIsDark, roundTripProbe, switchEmptyStateBackground } from './theme';
+export { applyTheme, applyThemeToAll, restoreTheme, restoreAllTheme, status, updateOptions, systemIsDark, roundTripProbe, switchEmptyStateBackground } from './theme';
 import { registerEmptyOverlay } from './empty-overlay';
 export { onChatViewEvent, onChatMessageEvent, onChatRuntimeEvent } from './empty-overlay';
 

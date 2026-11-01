@@ -1,0 +1,54 @@
+{
+  "name": "Claude Code Inspired",
+  "version": "1.6.1",
+  "host": "Operit 1.12.2",
+  "palettes": {
+    "dark": {
+      "background": "#1C1B19",
+      "panel": "#262521",
+      "text": "#E8E6DC",
+      "muted": "#A6A398",
+      "accent": "#D97757",
+      "border": "#45423B"
+    },
+    "light": {
+      "background": "#FAF9F5",
+      "panel": "#F0EEE6",
+      "text": "#3D3A32",
+      "muted": "#757166",
+      "accent": "#B85335",
+      "border": "#DDD9CE"
+    }
+  },
+  "note": "非官方配色预设源文件，由 ToolPkg 应用；不是 .otheme 文件。",
+  "semantic": {
+    "primary_action": {
+      "dark": "#D97757",
+      "light": "#B85335"
+    },
+    "success": {
+      "dark": "#8BC98B",
+      "light": "#327548"
+    },
+    "info": {
+      "dark": "#8FC7D9",
+      "light": "#357A91"
+    },
+    "warning": {
+      "dark": "#D6B56D",
+      "light": "#9A6A18"
+    },
+    "error": {
+      "dark": "#F0A08D",
+      "light": "#B44232"
+    }
+  },
+  "font": "monospace",
+  "semanticCoverage": {
+    "primary_action": "Host custom primary + Material primary",
+    "info": "Host custom secondary + Material secondary; not all information messages",
+    "success": "Material tertiary and plugin preview; not a universal success-status hook",
+    "warning": "Plugin preview and source palette only; host has no warning role",
+    "error": "Material error and plugin preview; hardcoded errors may differ"
+  }
+}

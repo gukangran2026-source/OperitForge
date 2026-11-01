@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "toolpkg_id": "local.operit.claude_code_theme",
+  "version": "1.8.0",
+  "api_version": "1.0.1",
+  "main": "dist/main.js",
+  "author": ["liuenmin"],
+  "display_name": {
+    "zh": "Claude Code 主题",
+    "en": "Claude Code Theme"
+  },
+  "description": {
+    "zh": "Claude Code 风格米白/暖黑主题。跟随系统深浅色自动切换、透明输入框。新对话空状态显示 Claude 星芒与问候语，星芒和标语各有独立开关，发出第一条消息后自动淡出。问候语按星期与时段确定，并依据本地使用习惯（深夜居多时显示夜猫子），习惯数据仅保存在本机、上限 1MB、按最久未见淘汰，不调用任何模型。适配 Operit 1.12.2。",
+    "en": "Claude Code inspired theme for Operit 1.12.2: paper light and warm dark palettes, system dark-mode following, transparent chat input. Empty chats show the Claude starburst and a greeting chosen by weekday and time of day, with separate switches for the icon and the slogan; both fade out after the first message. Habits are counted locally only (1 MB cap, least-recently-seen eviction) and never sent to a model."
+  },
+  "enabled_by_default": true,
+  "logo": "logo",
+  "resources": [
+    {
+      "key": "logo",
+      "path": "resources/logo.svg",
+      "mime": "image/svg+xml"
+    },
+    {
+      "key": "background",
+      "path": "resources/background.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "palette",
+      "path": "resources/palette.json",
+      "mime": "application/json"
+    },
+    {
+      "key": "background_light",
+      "path": "resources/background-light.png",
+      "mime": "image/png"
+    },
+    {
+      "key": "global_palette_dex",
+      "path": "resources/global-palette.dex",
+      "mime": "application/octet-stream"
+    }
+  ],
+  "subpackages": []
+}
